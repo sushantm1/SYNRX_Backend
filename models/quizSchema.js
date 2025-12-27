@@ -56,6 +56,8 @@ const questionSchema = new mongoose.Schema(
           "Correct answer(s) must be valid and match available options for this question type.",
       },
     },
+    imageUrl: { type: String, trim: true }, // For hosted images
+    imageBase64: { type: String, trim: true }, // Optional: base64 string for embedded images
   },
   { timestamps: true }
 );
