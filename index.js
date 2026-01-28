@@ -14,7 +14,6 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const morgan = require("morgan");
 
-dbConnect();
 app.use(morgan("dev"));
 
 const allowedOrigins = [
@@ -66,6 +65,14 @@ app.get("/", (req, res) => {
   res.send("Hello from Server Side");
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running at PORT ${PORT}`);
-});
+(async () => {
+  try {
+    await dbConnect();
+    app.listen(PORT, () => {
+      console.log(`Server is running at PORT ${PORT}`);
+    });
+  } catch (err) {
+    console.error("Failed to start server:", err.message);
+    process.exit(1);
+  }
+})();
