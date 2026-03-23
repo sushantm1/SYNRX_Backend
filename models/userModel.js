@@ -79,6 +79,26 @@ var userSchema = new mongoose.Schema(
       ref: "Course",
       default: null,
     },
+
+    // Faculty-specific fields
+    phone: {
+      type: String,
+      trim: true,
+    },
+    department: {
+      type: String,
+      enum: ["CSE", "ECE", "MECH", "CIVIL", null],
+      default: null,
+    },
+    specialization: {
+      type: String,
+      trim: true,
+    },
+    facultyId: {
+      type: String,
+      unique: true,
+      sparse: true, // Allow null values for non-faculty users
+    },
   },
   {
     timestamps: true,

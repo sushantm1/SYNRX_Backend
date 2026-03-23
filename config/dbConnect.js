@@ -8,7 +8,12 @@ const dbConnect = async () => {
   }
 
   try {
-    await mongoose.connect(uri, { serverSelectionTimeoutMS: 10000 });
+    await mongoose.connect(uri, {
+      serverSelectionTimeoutMS: 30000, // 30 seconds
+      socketTimeoutMS: 45000, // 45 seconds
+      maxPoolSize: 10,
+      retryWrites: true,
+    });
     console.log("Database Connected Successfully");
   } catch (error) {
     console.error("Database connection failed:", error.message || error);

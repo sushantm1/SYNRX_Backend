@@ -4,6 +4,11 @@ const {
   listPendingFaculty,
   approvedFaculty,
   rejectFaculty,
+  createFaculty,
+  getFaculty,
+  getFacultyById,
+  updateFaculty,
+  deleteFaculty,
 } = require("../controllers/adminCtrl");
 const { protect, authorizeRoles } = require("../middlewares/authMiddleware");
 const router = express.Router();
@@ -13,6 +18,42 @@ router.post(
   protect,
   authorizeRoles("superadmin"),
   registerAdminUser
+);
+
+// Faculty Management
+router.post(
+  "/create-faculty",
+  protect,
+  authorizeRoles("superadmin"),
+  createFaculty
+);
+
+router.get(
+  "/faculties",
+  protect,
+  authorizeRoles("superadmin"),
+  getFaculty
+);
+
+router.get(
+  "/faculty/:id",
+  protect,
+  authorizeRoles("superadmin"),
+  getFacultyById
+);
+
+router.put(
+  "/faculty/:id",
+  protect,
+  authorizeRoles("superadmin"),
+  updateFaculty
+);
+
+router.delete(
+  "/faculty/:id",
+  protect,
+  authorizeRoles("superadmin"),
+  deleteFaculty
 );
 
 router.get(
