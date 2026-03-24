@@ -123,7 +123,7 @@ const checkCurrentUser = asyncHandler(async (req, res) => {
 
     const user = await User.findById(decoded.id)
       .select(
-        "-approvalStatus -createdAt -deletedAt -failedLoginAttempts -isActive -isVerified -passwordChangedAt"
+        "-approvalStatus -createdAt -deletedAt -failedLoginAttempts -isActive -passwordChangedAt"
       )
       .populate("studentProfile");
 
@@ -131,7 +131,16 @@ const checkCurrentUser = asyncHandler(async (req, res) => {
 
     res.json({
       loggedIn: true,
-      user,
+      user: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        roles: user.roles,
+        isApproved: user.isApproved,
+        isVerified: user.isVerified,
+        profileCompleted: !!user.studentProfile,
+        studentProfile: user.studentProfile,
+      },
       profileCompleted: !!user.studentProfile,
     });
   } catch (error) {
